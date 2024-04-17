@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Male_Fashion Template">
+<meta name="keywords" content="Male_Fashion, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Male-Fashion</title>
+<link rel="icon" href="/img/logo-3.png">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+	rel="stylesheet">
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+	<script th:if="${session.AddToCartErr != null}">
+		swal("Error", "Bạn phải đăng nhập mới có thể sử dụng chức năng này !!", "error");
+	</script>
+	<p th:if="${session.AddToCartErr != null}"
+		th:text="${#session.setAttribute('AddToCartErr', null)}"
+		style="display: none;"></p>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Offcanvas Menu Begin -->
+	<div class="offcanvas-menu-overlay"></div>
+	<div class="offcanvas-menu-wrapper">
+		<div class="offcanvas__option">
+			<div class="offcanvas__links">
+				<a th:if="${session.acc == null}" th:href="@{/signin}">Đăng nhập</a> <a
+					th:if="${session.acc != null}" th:text="${session.acc.user_Name}"
+					style="color: white;"></a> <a th:if="${session.acc != null}"
+												  th:href="@{/signout}">Đăng xuất</a> <a href="#">FAQs</a>
+			</div>
+			<div class="offcanvas__top__hover">
+				<span>Usd <i class="arrow_carrot-down"></i></span>
+				<ul>
+					<li>USD</li>
+					<li>EUR</li>
+					<li>USD</li>
+				</ul>
+			</div>
+		</div>
+		<div class="offcanvas__nav__option">
+			<a href="#" class="search-switch"><img src="/img/icon/search.png"
+												   alt=""></a> <a href="#"><img src="/img/icon/heart.png" alt=""></a>
+			<a th:href="@{/cart}"><img src="/img/icon/cart.png" alt="">
+				<span th:text="${session.countCart}"></span></a>
+		</div>
+		<div id="mobile-menu-wrap"></div>
+		<div class="offcanvas__text">
+			<p>Miễn phí giao hàng, 30 ngày trả hàng hoặc hoàn tiền.</p>
+		</div>
+	</div>
+	<!-- Offcanvas Menu End -->
+
+	<!-- Header Section Begin -->
+	<header class="header">
+		<div class="header__top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-7">
+						<div class="header__top__left">
+							<p>Miễn phí giao hàng, 30 ngày trả hàng hoặc hoàn tiền.</p>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-5">
+						<div class="header__top__right">
+							<div class="header__top__links">
+								<a th:if="${session.acc == null}" th:href="@{/signin}">Đăng nhập</a> <a th:if="${session.acc != null}"
+																										th:text="${session.acc.user_Name}" style="color: white;"></a> <a
+									th:if="${session.acc != null}" th:href="@{/signout}">Đăng xuất</a><a href="#">FAQs</a>
+							</div>
+							<div class="header__top__hover">
+								<span>Usd <i class="arrow_carrot-down"></i></span>
+								<ul>
+									<li>USD</li>
+									<li>EUR</li>
+									<li>USD</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-3">
+					<div class="header__logo">
+						<a th:href="@{/home}"><img src="img/logo.png" alt=""></a>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<nav class="header__menu mobile-menu">
+						<ul>
+							<li class="active"><a th:href="@{/home}">Trang chủ</a></li>
+							<li><a th:href="@{/shop}">Shop</a></li>
+							<li><a href="#">Khác</a>
+								<ul class="dropdown">
+									<li><a th:href="@{/cart}">Giỏ hàng</a></li>
+									<li><a th:href="@{/myprofile}">Tài khoản</a></li>
+									<li><a th:href="@{/myhistory}">Lịch sử</a></li>
+									<li><a th:href="@{/about}">Về chúng tôi</a></li>
+								</ul></li>
+							<li><a th:href="@{/blog}">Bản tin</a></li>
+							<li><a th:href="@{/contact}">Liên hệ</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="col-lg-3 col-md-3">
+					<div class="header__nav__option">
+						<a href="#" class="search-switch"><img
+								src="img/icon/search.png" alt=""></a> <a href="#"><img
+							src="img/icon/heart.png" alt=""></a> <a th:href="@{/cart}"><img
+							src="img/icon/cart.png" alt=""> <span
+							th:text="${session.countCart}"></span></a>
+					</div>
+				</div>
+			</div>
+			<div class="canvas__open">
+				<i class="fa fa-bars"></i>
+			</div>
+		</div>
+	</header>
+	<!-- Header Section End -->
+
+	<!-- Shop Details Section Begin -->
+	<section class="shop-details">
+		<div class="product__details__pic">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="product__details__breadcrumb">
+							<a th:href="@{/home}">Trang chủ</a> <a th:href="@{/shop}">Shop</a> <span>Chi tiết sản phẩm</span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-3 col-md-3">
+						<ul class="nav nav-tabs" role="tablist">
+							<th:block th:if="${yStat.index == 0}"
+								th:each="y : ${product.productImage}">
+								<li class="nav-item"><a class="nav-link active"
+									data-toggle="tab" th:href="'#tabs-'+${yStat.index + 1}"
+									role="tab">
+										<div class="product__thumb__pic set-bg"
+											th:data-setbg="${y.url_Image}"></div>
+								</a></li>
+							</th:block>
+							<th:block th:if="${yStat.index != 0}"
+								th:each="y : ${product.productImage}">
+								<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									th:href="'#tabs-'+${yStat.index + 1}" role="tab">
+										<div class="product__thumb__pic set-bg"
+											th:data-setbg="${y.url_Image}"></div>
+								</a></li>
+							</th:block>
+						</ul>
+					</div>
+					<div class="col-lg-6 col-md-9">
+						<div class="tab-content">
+							<th:block th:each="y : ${product.productImage}">
+								<div th:if="${yStat.index == 0}" class="tab-pane active"
+									th:id="'tabs-'+${yStat.index + 1}" role="tabpanel">
+									<div class="product__details__pic__item">
+										<img th:src="${y.url_Image}" alt="">
+									</div>
+								</div>
+								<div th:if="${yStat.index != 0}" class="tab-pane"
+									th:id="'tabs-'+${yStat.index + 1}" role="tabpanel">
+									<div class="product__details__pic__item">
+										<img th:src="${y.url_Image}" alt="">
+									</div>
+								</div>
+							</th:block>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="product__details__content">
+			<div class="container">
+				<div class="row d-flex justify-content-center">
+					<div class="col-lg-8">
+						<div class="product__details__text">
+							<h4 th:text="${product.product_Name}"></h4>
+<!--							<div class="rating">-->
+<!--								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--									class="fa fa-star"></i> <i class="fa fa-star"></i> <i-->
+<!--									class="fa fa-star-o"></i> <span> - 5 Reviews</span>-->
+<!--							</div>-->
+							<h3 th:text="${product.price}+' VNĐ'"></h3>
+							<p th:text="${product.description}"></p>
+							<form action="/addToCart" method="post">
+								<div class="product__details__cart__option">
+									<div class="quantity">
+										<div class="pro-qty">
+											<input name="count" type="text" value="1">
+										</div>
+										<input name="product_id" style="display: none;" type="text"
+											th:value="${product.id}">
+									</div>
+									<button class="primary-btn">Thêm vào giỏ hàng</button>
+								</div>
+							</form>
+
+							<div class="product__details__last__option">
+								<ul>
+									<li><span>SKU:</span> 3812912</li>
+									<li><span>Danh mục:</span> Quần áo</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Shop Details Section End -->
+
+	<!-- Related Section Begin -->
+	<section class="related spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h3 class="related-title">Sản phẩm liên quan</h3>
+				</div>
+			</div>
+			<div class="row">
+				<th:block th:each="y : ${relatedProduct}">
+					<div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+						<div class="product__item">
+							<div class="product__item__pic set-bg"
+								th:data-setbg="${y.productImage[0].url_Image}">
+								<span class="label">New</span>
+								<ul class="product__hover">
+									<li><a href="#"><img src="/img/icon/heart.png" alt=""></a></li>
+									<li><a href="#"><img src="/img/icon/compare.png"
+											alt=""></a></li>
+									<li><a th:href="@{/productDetail/{id}(id=${y.id})}"><img
+											src="/img/icon/search.png" alt=""></a></li>
+								</ul>
+							</div>
+							<div class="product__item__text">
+								<h6 th:text="${y.product_Name}"></h6>
+								<a th:href="@{/addToCart/{id}(id=${y.id})}" class="add-cart">+
+									Thêm vào giỏ hàng</a>
+								<div class="rating">
+									<i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+										class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+										class="fa fa-star-o"></i>
+								</div>
+								<h5
+									th:text=" ${#numbers.formatDecimal(y.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h5>
+								<div class="product__color__select">
+									<label for="pc-1"> <input type="radio" id="pc-1">
+									</label> <label class="active black" for="pc-2"> <input
+										type="radio" id="pc-2">
+									</label> <label class="grey" for="pc-3"> <input type="radio"
+										id="pc-3">
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
+		</div>
+	</section>
+	<!-- Related Section End -->
+
+	<!-- Footer Section Begin -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="footer__about">
+						<div class="footer__logo">
+							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+						</div>
+						<p>Khách hàng là thượng đế.</p>
+						<a href="https://www.facebook.com/hh.nghiem">Liên hệ Facebook</a>
+						<p>Số điện thoại: 0789584184</p>
+						<p>Email: nghiemmache2112@gmail.com</p>
+					</div>
+				</div>
+				<div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+					<div class="footer__widget">
+						<h6>Danh mục</h6>
+						<ul>
+							<li><a href="#">Quần áo</a></li>
+							<li><a href="#">Giày</a></li>
+							<li><a href="#">Phụ kiện</a></li>
+							<li><a href="#">Sale</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-3 col-sm-6">
+					<div class="footer__widget">
+						<h6>Hỗ trợ</h6>
+						<ul>
+							<li><a href="#">Liên hệ với chúng tôi</a></li>
+							<li><a href="#">Phương thức thanh toán</a></li>
+							<li><a href="#">Giao hàng</a></li>
+							<li><a href="#">Trả hàng & hoàn tiền</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+					<div class="footer__widget">
+						<h6>NewLetter</h6>
+						<div class="footer__newslatter">
+							<p>Hãy là người đầu tiên nhận được thông tin về khuyến mãi !</p>
+							<form action="#">
+								<input type="text" placeholder="Your email">
+								<button type="submit">
+									<span class="icon_mail_alt"></span>
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="footer__copyright__text">
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						<p>
+							Copyright ©
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							| Huỳnh Hiểu Nghiệm - 2080600513
+						</p>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer Section End -->
+
+	<!-- Search Begin -->
+	<div class="search-model">
+		<div class="h-100 d-flex align-items-center justify-content-center">
+			<div class="search-close-switch">+</div>
+			<form th:action="@{/search}" method="POST" class="search-model-form">
+				<input name="search-input" type="text" id="search-input"
+					placeholder="Search here.....">
+			</form>
+		</div>
+	</div>
+	<!-- Search End -->
+
+	<!-- Js Plugins -->
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.nice-select.min.js"></script>
+	<script src="/js/jquery.nicescroll.min.js"></script>
+	<script src="/js/jquery.magnific-popup.min.js"></script>
+	<script src="/js/jquery.countdown.min.js"></script>
+	<script src="/js/jquery.slicknav.js"></script>
+	<script src="/js/mixitup.min.js"></script>
+	<script src="/js/owl.carousel.min.js"></script>
+	<script src="/js/main.js"></script>
+</body>
+
+</html>

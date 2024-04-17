@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<title>Male-Fashion</title>
+<link rel="icon" href="/img/logo-3.png">
+<link rel="stylesheet" href="css/invoice.css">
+</head>
+
+<body>
+
+	<!-- Print Button -->
+	<div style="display: flex;">
+		<a th:if="${invoiceView == null}" th:href="@{/home}" class="print-button">Tiếp tục mua hàng</a>
+		<a th:if="${invoiceView != null}" th:href="@{/myhistory}" class="print-button">Lịch sử mua hàng</a> <a
+			href="javascript:window.print()" class="print-button">In đơn hàng</a>
+	</div>
+
+
+	<!-- Invoice -->
+	<div id="invoice">
+
+		<!-- Header -->
+		<div class="row">
+			<div class="col-md-6">
+				<div id="logo">
+					<img src="img/logo.png" alt="">
+				</div>
+			</div>
+			<div class="col-md-6">
+
+				<p id="details">
+					<strong>Đơn số: </strong><i th:text="'#' + ${order.id}"></i><br>
+					<strong>Ngày: </strong><i  th:text="${#dates.format(order.booking_Date, 'dd-MM-yyyy')}"></i><br>
+					Hạn chót 7 ngày kể từ ngày phát hành
+				</p>
+			</div>
+		</div>
+		<!-- Client & Supplier -->
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Đơn hàng</h2>
+			</div>
+
+			<div class="col-md-6">
+				<strong class="margin-bottom-5">Người gửi</strong>
+				<p>
+					Male-Fashion <br> 10/80C XL Hà Nội, Phường Tân Phú<br>TP.
+					Thủ Đức - TP. Hồ Chí Minh <br>
+				</p>
+			</div>
+
+			<div class="col-md-6">
+				<strong class="margin-bottom-5">Người nhận</strong>
+				<p>
+					<i th:text="${order.fullname}"></i> <br> <i
+						th:text="'SĐT: ' + ${order.phone}"></i> <br> <i
+						th:text="'Email: ' + ${order.email}"></i> <br>
+				</p>
+			</div>
+		</div>
+		<!-- Invoice -->
+		<div class="row">
+			<div class="col-md-12">
+				<table class="margin-top-20">
+					<tr>
+						<th>Sản phẩm</th>
+						<th>Số lượng</th>
+						<th>Tổng</th>
+					</tr>
+					<th:block th:each="y: ${listOrder_Item}">
+						<tr>
+							<td th:text="${y.product.product_Name}"></td>
+							<td th:text="${y.count}"></td>
+							<td th:text="${#numbers.formatDecimal(y.product.price * y.count, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+						</tr>
+					</th:block>
+
+				</table>
+
+				<p>
+					<strong class="margin-bottom-5">Địa chỉ: </strong>
+					<i th:text="${order.address}"></i><br>
+					<strong class="margin-bottom-5">Phương thức thanh toán: </strong>
+					<i th:text="${order.payment_Method}"></i>
+				</p>
+				
+				
+			</div>
+
+			<div class="col-md-4 col-md-offset-8">
+
+				<table id="totals">
+					<tr>
+						<th>Tổng thanh toán</th>
+						<th><span th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
+
+					</tr>
+				</table>
+			</div>
+		</div>
+
+
+		<!-- Footer -->
+		<div class="row">
+			<div class="col-md-12">
+				<ul id="footer">
+					<li><span>www.facebook.com/hh.nghiem</span></li>
+					<li>nghiemmache2112@gmail.com</li>
+					<li>0789584184</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+
+</html>
